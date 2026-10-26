@@ -182,7 +182,7 @@
   body::before {
     content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background: url("victoria-cloud-logo.png") center / min(70vw, 640px) no-repeat;
-    opacity: .06; mix-blend-mode: multiply;
+    opacity: .04; mix-blend-mode: multiply;
   }
   .vc-logo { display: block; width: min(320px, 70vw); height: auto; margin: 0 auto 18px; mix-blend-mode: multiply; }
   .vc-logo-sm { height: 56px; width: auto; mix-blend-mode: multiply; vertical-align: middle; }
@@ -580,7 +580,7 @@
           <button class="btn primary" type="submit">Enviar mensaje</button>
           <p id="form-status" role="status" aria-live="polite"></p>
         </form>
-        <p class="alt">¿Prefieres escribir directamente? <a href="mailto:servicliente@servinformacion.com">servicliente@servinformacion.com</a></p>
+        <p class="alt">¿Prefieres escribir directamente? <a href="mailto:mateo.100@hotmail.es">mateo.100@hotmail.es</a><br>Llámame o escríbeme por WhatsApp: <a href="tel:+573116513869">+57 311 651 3869</a> · <a href="https://wa.me/573116513869" target="_blank" rel="noopener">WhatsApp</a></p>
       </div>
     </div>
   </section>
@@ -617,6 +617,12 @@
   })();
 
   // Navegación interna sin agregar #seccion a la URL.
+  // Si alguien abre la página con #seccion, la quita de la dirección y baja a esa sección.
+  if (location.hash) {
+    const t = document.querySelector(location.hash);
+    history.replaceState(null, "", location.pathname + location.search);
+    if (t) t.scrollIntoView();
+  }
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const target = document.querySelector(a.getAttribute("href"));
