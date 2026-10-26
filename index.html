@@ -178,13 +178,22 @@
     .top .wrap { flex-direction: column; align-items: flex-start; }
     .contact { padding: 24px; }
   }
+  /* Logo Victoria Cloud: marca de agua de fondo y apariciones estratégicas */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: url("victoria-cloud-logo.png") center / min(70vw, 640px) no-repeat;
+    opacity: .06; mix-blend-mode: multiply;
+  }
+  .vc-logo { display: block; width: min(320px, 70vw); height: auto; margin: 0 auto 18px; mix-blend-mode: multiply; }
+  .vc-logo-sm { height: 56px; width: auto; mix-blend-mode: multiply; vertical-align: middle; }
 </style>
+  <link rel="icon" type="image/png" href="victoria-cloud-logo.png">
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#inicio"><span style="font-weight:800">Victoria Cloud</span></a>
+    <a class="brand" href="#inicio"><img class="vc-logo-sm" src="victoria-cloud-logo.png" alt="Victoria Cloud"></a>
     <nav>
       <a href="#enfoque">Enfoque</a>
       <a href="#servicios">Servicios</a>
@@ -201,6 +210,7 @@
     <div class="hero-grid">
       <div>
         <span class="eyebrow">Networking · Ciberseguridad · Multicloud</span>
+        <img class="vc-logo" src="victoria-cloud-logo.png" alt="Victoria Cloud" style="margin:0 0 18px;width:min(280px,70vw)">
         <h1>Conecto, protejo y escalo la infraestructura de tu organización.</h1>
         <p class="lead">Diseño y opero redes, aseguro los entornos y llevo las cargas de trabajo a la nube con criterios de costo, rendimiento y seguridad.</p>
         <div class="cta">
@@ -559,6 +569,7 @@
   <section id="contacto">
     <div class="wrap">
       <div class="contact">
+        <img class="vc-logo" src="victoria-cloud-logo.png" alt="Victoria Cloud">
         <h2 class="section-title">Hablemos</h2>
         <p>Si quieres evaluar tu infraestructura, conectar tu red de forma segura o llevar tus cargas a la nube, escríbeme.</p>
         <form id="contact-form" class="contact-form" action="https://formspree.io/f/TU_ID_DE_FORMULARIO" method="POST">
@@ -577,6 +588,7 @@
 
 <footer>
   <div class="wrap">
+    <img class="vc-logo-sm" src="victoria-cloud-logo.png" alt="Victoria Cloud" style="height:44px">
     <span>© 2026 Victoria Cloud · Mateo Peña Rendón · Servinformación</span>
     <span>Networking · Ciberseguridad · IT Multicloud</span>
   </div>
