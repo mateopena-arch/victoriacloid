@@ -154,6 +154,16 @@
   /* Contact */
   .contact { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 36px; text-align: center; }
   .contact p { color: var(--muted); max-width: 60ch; margin: 0 auto 22px; }
+  .contact-form { display: grid; gap: 14px; max-width: 520px; margin: 0 auto; text-align: left; }
+  .contact-form label { display: grid; gap: 6px; font-weight: 600; font-size: .95rem; }
+  .contact-form input, .contact-form textarea {
+    font: inherit; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--bg, #fff); color: var(--text); width: 100%; box-sizing: border-box;
+  }
+  .contact-form button { justify-self: start; cursor: pointer; }
+  .contact-form #form-status { margin: 0; min-height: 1.2em; }
+  .contact .alt { margin: 22px auto 0; font-size: .95rem; }
+  .contact .alt a { color: var(--accent); }
 
   footer { padding: 28px 0; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
   footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -509,7 +519,15 @@
       <div class="contact">
         <h2 class="section-title">Hablemos</h2>
         <p>Si quieres evaluar tu infraestructura, conectar tu red de forma segura o llevar tus cargas a la nube, escríbeme.</p>
-        <a class="btn primary" href="mailto:tu-correo@ejemplo.com">Enviar correo</a>
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/TU_ID_DE_FORMULARIO" method="POST">
+          <label>Nombre <input type="text" name="nombre" required maxlength="100"></label>
+          <label>Correo <input type="email" name="correo" required maxlength="150"></label>
+          <label>Mensaje <textarea name="mensaje" rows="4" required maxlength="2000"></textarea></label>
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <button class="btn primary" type="submit">Enviar mensaje</button>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
+        <p class="alt">¿Prefieres escribir directamente? <a href="mailto:tu-correo@ejemplo.com">tu-correo@ejemplo.com</a></p>
       </div>
     </div>
   </section>
@@ -543,6 +561,42 @@
       dot.classList.add("err");
       text.textContent = "no disponible. Revisa que el puerto esté público y la API esté corriendo.";
     }
+  })();
+
+  // Navegación interna sin agregar #seccion a la URL.
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const target = document.querySelector(a.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  // Formulario de contacto (Formspree). Reemplaza TU_ID_DE_FORMULARIO por tu ID real.
+  (() => {
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (form.action.includes("TU_ID_DE_FORMULARIO")) {
+        status.textContent = "El formulario aún no está configurado. Escríbeme directamente al correo indicado.";
+        return;
+      }
+      status.textContent = "Enviando...";
+      try {
+        const r = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" }
+        });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        form.reset();
+        status.textContent = "¡Gracias! Tu mensaje fue enviado.";
+      } catch (err) {
+        status.textContent = "No se pudo enviar. Intenta de nuevo o escribe al correo indicado.";
+      }
+    });
   })();
 </script>
 </body>
